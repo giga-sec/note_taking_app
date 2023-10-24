@@ -12,8 +12,8 @@ const notes = JSON.parse(localStorage.getItem("notes") || "[]");
 let isUpdate = false, updateId;
 
 addBox.addEventListener("click", () => {
-    popupTitle.innerText = "Add a new Note";
-    addBtn.innerText = "Add Note";
+    popupTitle.innerText = "ADD NOTE";
+    addBtn.innerText = "ADD NOTE";
     popupBox.classList.add("show");
     document.querySelector("body").style.overflow = "hidden";
     if(window.innerWidth > 660) titleTag.focus();
