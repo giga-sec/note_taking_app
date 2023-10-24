@@ -12,9 +12,8 @@ from heapq import nlargest
 
 
 original_text ="""
-API stands for Application Programming Interface. It is a set of rules and protocols that allows different software systems to communicate with each other. APIs allow different applications, services, and devices to exchange data and functionality in a secure and standardized way.
-
-APIs are used to build complex systems by allowing different components to work together seamlessly. For example, a mobile app might use an API to retrieve data from a web service or to send data to a server. APIs can also be used to connect different devices, such as sensors or machines, to the internet and enable them to exchange data.
+Unya dapat ang mga but-an nga wala gihapoy uyab, dapat usa mag 2024 kay makakita nag uyab.
+Ang mga naa nay uyab, dili unta na sila mapalid sa lain tungods kabugnaws hangin
 """
 
 nlp = spacy.load("en_core_web_sm")
