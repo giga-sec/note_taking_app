@@ -3,7 +3,7 @@ Script to summarize text
 """
 
 import spacy
-import en_core_web_sm
+import en_core_web_md
 from spacy.lang.en.stop_words import STOP_WORDS
 from string import punctuation
 from collections import Counter
@@ -11,8 +11,8 @@ from heapq import nlargest
 
 
 def summarize(original_text):
-    nlp = spacy.load("en_core_web_sm")
-    nlp = en_core_web_sm.load()
+    nlp = spacy.load("en_core_web_md")
+    nlp = en_core_web_md.load()
     doc = nlp(original_text)
     keyword = []
     stopwords = list(STOP_WORDS)
@@ -25,7 +25,7 @@ def summarize(original_text):
     freq_word = Counter(keyword)
     max_freq = Counter(keyword).most_common(1)[0][1]
     for word in freq_word.keys():
-            freq_word[word] = (freq_word[word]/max_freq)
+        freq_word[word] = (freq_word[word]/max_freq)
     freq_word.most_common(5)
     sent_strength={}
     for sent in doc.sents:
@@ -44,7 +44,6 @@ def summarize(original_text):
     print("\n\n==!! Summarized Version !!==")
     print(summary)
     return summary
-
 
 
 

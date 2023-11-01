@@ -1,16 +1,14 @@
 # note_taking_app
 Group Project
 
-Required Dependecies for Python
+Required Dependecies for Python. Please install using cmd
 - pip install -u spacy
-- python -m spacy download en_core_web_sm
+- python -m spacy download en_core_web_md
 - pip install flask
 
 
 Todo Backend:
-- Login/Signup
-- Database Integration (Save, Delete, Edit notes)
-- Account Creation / Making each notes unique to each user
+- Database Integration
 
-Later:
-- ??????? Publish website (make it available online)????
+Limited Features:
+- Only summarizes English Language

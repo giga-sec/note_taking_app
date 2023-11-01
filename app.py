@@ -18,7 +18,6 @@ def add_note():
     description = request.json["description"]
     # Print the text to the console
     summarized_text = summarize(description)
-    print(summarized_text)
 
     # Return a response to the AJAX request
     return jsonify({"summarized_text": summarized_text})
