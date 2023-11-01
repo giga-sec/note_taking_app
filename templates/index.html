@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TECHYNOTES</title>
+    <link rel="icon" type="image/x-icon" href="./icon.jpg">
+    <link rel="stylesheet" href="/static/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  </head>
+  <body>
+    <div class="logo"><h2>TECHYNOTES</h2></div>
+    <div class="popup-box">
+      <div class="popup">
+        <div class="content">
+          <header>
+            <p></p>
+            <i class="uil uil-times"></i>
+          </header>
+          <form action="#", method="POST">
+            <div class="row title">
+              <label>TITLE: </label>
+              <input type="text" spellcheck="false">
+            </div>
+            <div class="row description">
+              <label>DESCRIPTION: </label>
+              <textarea spellcheck="false" name="description"></textarea>
+            </div>
+            <div class="row summarize">
+              <label>SUMMARIZED: </label>
+              <textarea spellcheck="false" name="summarize"></textarea>
+            </div>
+            <button name="add" onclick="addNote()">ADD WTF</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper">
+      <li class="add-box">
+        <div class="icon"><i class="uil uil-plus"></i></div>
+        <p>ADD NOTE</p>
+      </li>
+    </div>
+    <script src="/static/script.js"></script>
+  </body>
+</html>
