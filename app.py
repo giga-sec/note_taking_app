@@ -80,7 +80,9 @@ def update_note(id):
         if note:
             note.title = data.get('title', note.title)
             note.description = data.get('description', note.description)
-            note.summary = data.get('summary', note.summary)
+
+            note.summary = summarize(note.description)
+
             note.date = data.get('date', note.date)
             db.session.commit()
             return jsonify({
