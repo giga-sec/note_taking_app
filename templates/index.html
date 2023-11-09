@@ -17,20 +17,20 @@
             <p></p>
             <i class="uil uil-times"></i>
           </header>
-          <form action="#", method="POST">
+          <form id="noteForm" action="#" method="POST">
             <div class="row title">
               <label>TITLE: </label>
-              <input type="text" spellcheck="false">
+              <input id="titleInput" type="text" spellcheck="false">
             </div>
             <div class="row description">
               <label>DESCRIPTION: </label>
-              <textarea spellcheck="false" name="description"></textarea>
+              <textarea id="descriptionInput" spellcheck="false" name="description"></textarea>
             </div>
             <div class="row summarize">
               <label>SUMMARIZED: </label>
               <textarea spellcheck="false" name="summarize"></textarea>
             </div>
-            <button name="add" onclick="addNote()">ADD WTF</button>
+            <button type="submit">ADD</button>
           </form>
         </div>
       </div>
