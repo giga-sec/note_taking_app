@@ -3,7 +3,8 @@ const addBox = document.querySelector(".add-box"),
     popupTitle = popupBox.querySelector("header p"),
     closeIcon = popupBox.querySelector("header i"),
     titleTag = popupBox.querySelector("input"),
-    descTag = popupBox.querySelector("textarea"),
+    descTag = popupBox.querySelector("textarea[name='description']"),
+    summaryTag = popupBox.querySelector("textarea[name='summary']"),
     addBtn = popupBox.querySelector("button");
 
 const months = ["January", "February", "March", "April", "May", "June", "July",
@@ -20,6 +21,7 @@ addBox.addEventListener("click", () => {
     addBtn.innerText = "ADD";
     popupBox.classList.add("show");
     document.querySelector("body").style.overflow = "hidden";
+    clearSummarizedNote();
     if (window.innerWidth > 660) titleTag.focus();
 });
 
@@ -96,8 +98,9 @@ addBtn.addEventListener("click", e => {
     e.preventDefault();
     let title = titleTag.value.trim();
     let description = descTag.value.trim();
+    let summary = summaryTag.value.trim();
 
-    if (title || description) {
+    if (title || description || summary) {
         let currentDate = new Date();
         let month = months[currentDate.getMonth()];
         let day = currentDate.getDate();
@@ -106,6 +109,7 @@ addBtn.addEventListener("click", e => {
         let data = {
             title: title,
             description: description,
+            summary: summary,
             date: `${month} ${day}, ${year}`
         };
 
@@ -126,6 +130,7 @@ function editNote(noteId) {
         .then(note => {
             titleTag.value = note.title;
             descTag.value = note.description;
+            summaryTag.value = note.summary;
             popupTitle.innerText = "Update a Note";
             addBtn.innerText = "Update Note";
             popupBox.classList.add("show");
@@ -134,6 +139,9 @@ function editNote(noteId) {
       });
 }
 
+function clearSummarizedNote() {
+    document.getElementById("summarizedOutput").value = "";
+}
 
 function addNote(data) {
     fetch("/notes", {

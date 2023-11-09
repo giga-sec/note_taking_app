@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from summarizer import summarize
-import db
 
 
 app = Flask(__name__)
@@ -13,6 +12,7 @@ class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     description = db.Column(db.Text)
+    summary = db.Column(db.Text)
     date = db.Column(db.String(20))
 
 
@@ -30,6 +30,7 @@ def get_notes():
             'id': note.id,
             'title': note.title,
             'description': note.description,
+            'summary': note.summary,
             'date': note.date
         })
     return jsonify(notes_data)
@@ -40,14 +41,16 @@ def add_note():
     data = request.get_json()
     title = data['title']
     description = data['description']
+    summary = summarize(description)
     date = data['date']
-    note = Note(title=title, description=description, date=date)
+    note = Note(title=title, description=description, summary=summary, date=date)
     db.session.add(note)
     db.session.commit()
     return jsonify({
         'id': note.id,
         'title': note.title,
         'description': note.description,
+        'summary': note.summary,
         'date': note.date
     })
 
@@ -62,6 +65,7 @@ def get_single_note(id):
             'id': note.id,
             'title': note.title,
             'description': note.description,
+            'summary': note.summary,
             'date': note.date
         })
 
@@ -76,12 +80,14 @@ def update_note(id):
         if note:
             note.title = data.get('title', note.title)
             note.description = data.get('description', note.description)
+            note.summary = data.get('summary', note.summary)
             note.date = data.get('date', note.date)
             db.session.commit()
             return jsonify({
                 'id': note.id,
                 'title': note.title,
                 'description': note.description,
+                'summary': note.summary,
                 'date': note.date
             })
         else:
