@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from summarizer import summarize
 import db
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///notes.db'
 db = SQLAlchemy(app)
+
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,28 +15,14 @@ class Note(db.Model):
     description = db.Column(db.Text)
     date = db.Column(db.String(20))
 
+
 def create_database():
-    """
-    Create a database using the current app context and create all the necessary tables.
-
-    This function does not take any parameters.
-
-    This function does not return any values.
-    """
     with app.app_context():
         db.create_all()
 
+
 @app.route('/notes', methods=['GET'])
 def get_notes():
-    """
-    Retrieves all notes from the database and returns them as a JSON response.
-
-    Parameters:
-        None
-
-    Returns:
-        A JSON response containing all the notes in the database.
-    """
     notes = Note.query.all()
     notes_data = []
     for note in notes:
@@ -48,15 +36,6 @@ def get_notes():
 
 @app.route('/notes', methods=['POST'])
 def add_note():
-    """
-    Adds a new note to the database.
-
-    Parameters:
-        None
-
-    Returns:
-        A JSON response containing the ID, title, description, and date of the added note.
-    """
     print("GET")
     data = request.get_json()
     title = data['title']
@@ -75,15 +54,6 @@ def add_note():
 
 @app.route('/notes/<int:id>', methods=['GET'])
 def get_single_note(id):
-    """
-    Update a note with the given ID.
-
-    Parameters:
-        id (int): The ID of the note to be updated.
-
-    Returns:
-        dict: A dictionary containing the updated note's ID, title, description, and date.
-    """
     print("GET SINGLE NOTE")
     if request.method == 'GET':
         # Handle the GET request to fetch the note contents
@@ -101,9 +71,7 @@ def get_single_note(id):
 def update_note(id):
     if request.method == 'PUT':
         # Handle the PUT request to update the note
-        print(f"Received PUT request for note ID:hat {id}")
         data = request.get_json()
-        print(f"Received data for note ID {id}: {data}")
         note = Note.query.get(id)
         if note:
             note.title = data.get('title', note.title)
@@ -121,15 +89,6 @@ def update_note(id):
 
 @app.route('/notes/<int:id>', methods=['DELETE'])
 def delete_note(id):
-    """
-    Deletes a note with the given ID.
-
-    Parameters:
-        id (int): The ID of the note to be deleted.
-
-    Returns:
-        dict: A JSON object with a message indicating that the note was deleted successfully.
-    """
     note = Note.query.get(id)
     db.session.delete(note)
     db.session.commit()

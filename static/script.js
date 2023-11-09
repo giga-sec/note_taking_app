@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   showNotes();
 });
 
+let global_note_id = 0;
+
 addBox.addEventListener("click", () => {
     popupTitle.innerText = "ADD NOTE";
     addBtn.innerText = "ADD";
@@ -34,7 +36,8 @@ function showNotes() {
         .then(notes => {
             if (!notes) return;
             document.querySelectorAll(".note").forEach(li => li.remove());
-            notes.forEach((note, id) => {
+            notes.forEach((note) => {
+                global_note_id = note.id;
                 let filterDesc = note.description.replaceAll("\n", '<br/>');
                 let liTag = `<li class="note">
                                 <div class="details">
@@ -46,7 +49,7 @@ function showNotes() {
                                     <div class="settings">
                                         <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
                                         <ul class="menu">
-                                            <li onclick="updateNote(${note.id})"><i class="uil uil-pen"></i>Edit</li>
+                                            <li onclick="editNote(${note.id})"><i class="uil uil-pen"></i>Edit</li>
                                             <li onclick="deleteNote(${note.id})"><i class="uil uil-trash"></i>Delete</li>
                                         </ul>
                                     </div>
@@ -89,22 +92,6 @@ function deleteNote(noteId) {
 }
 
 
-
-
-function updateNote(noteId) {
-    fetch(`/notes/${noteId}`)
-        .then(response => response.json())
-        .then(note => {
-            titleTag.value = note.title;
-            descTag.value = note.description;
-            popupTitle.innerText = "Update a Note";
-            addBtn.innerText = "Update Note";
-            popupBox.classList.add("show");
-            document.querySelector("body").style.overflow = "hidden";
-            if (window.innerWidth > 660) titleTag.focus();
-      });
-}
-
 addBtn.addEventListener("click", e => {
     e.preventDefault();
     let title = titleTag.value.trim();
@@ -121,18 +108,64 @@ addBtn.addEventListener("click", e => {
             description: description,
             date: `${month} ${day}, ${year}`
         };
-        fetch("/notes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(newNote => {
-                console.log(newNote);
-                showNotes();
-                closeIcon.click();
-            });
+
+        // Check if the popupTitle contains "Update" to determine if it's an update or add action
+        if (popupTitle.innerText.includes("Update")) {
+            // If it's an update, call the updateNote function
+            updateNote(data);
+        } else {
+            // If it's an add, call the addNote function
+            addNote(data);
+        }
     }
 });
+
+function editNote(noteId) {
+    fetch(`/notes/${noteId}`)
+        .then(response => response.json())
+        .then(note => {
+            titleTag.value = note.title;
+            descTag.value = note.description;
+            popupTitle.innerText = "Update a Note";
+            addBtn.innerText = "Update Note";
+            popupBox.classList.add("show");
+            document.querySelector("body").style.overflow = "hidden";
+            if (window.innerWidth > 660) titleTag.focus();
+      });
+}
+
+
+function addNote(data) {
+    fetch("/notes", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(newNote => {
+            console.log(newNote);
+            showNotes();
+            closeIcon.click();
+        });
+}
+
+
+function updateNote(data) {
+    let noteId = global_note_id;
+
+    fetch(`/notes/${noteId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(updatedNote => {
+            console.log(updatedNote);
+            showNotes();
+            closeIcon.click();
+        });
+}
