@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from summarizer import summarize
+import db
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -11,12 +13,14 @@ def index():
     return render_template("index.html")
 
 
-
 @app.route("/add_note", methods=["POST"])
 def add_note():
+
+
     # Get the text from the textarea tag
     description = request.json["description"]
     # Print the text to the console
+
     summarized_text = summarize(description)
 
     # Return a response to the AJAX request
