@@ -21,12 +21,11 @@ addBox.addEventListener("click", () => {
     addBtn.innerText = "ADD";
     popupBox.classList.add("show");
     document.querySelector("body").style.overflow = "hidden";
-    clearSummarizedNote();
     if (window.innerWidth > 660) titleTag.focus();
 });
 
 closeIcon.addEventListener("click", () => {
-    titleTag.value = descTag.value = "";
+    titleTag.value = descTag.value = summaryTag.value = "";
     popupBox.classList.remove("show");
     document.querySelector("body").style.overflow = "auto";
 });

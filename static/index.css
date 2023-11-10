@@ -5,11 +5,6 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-body{
-  background: url("./44.avif");
-  background-repeat: no-repeat;
-  background-size:auto\;
-}
 
 .logo{
     margin-top: 10px;
@@ -40,7 +35,7 @@ body{
   background-color:blanchedalmond;
   box-shadow: skyblue;
 }
-.add-box, .icon, .bottom-content, 
+.add-box, .icon, .bottom-content,
 .popup, header, .settings .menu li{
   display: flex;
   align-items: center;
