@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 let global_note_id = 0;
 
 addBox.addEventListener("click", () => {
-    popupTitle.innerText = "ADD NOTE";
-    addBtn.innerText = "ADD";
+    popupTitle.innerText = "TECHYNOTE";
+    addBtn.innerText = "ADD NOTE";
     popupBox.classList.add("show");
     document.querySelector("body").style.overflow = "hidden";
     if (window.innerWidth > 660) titleTag.focus();
@@ -80,7 +80,7 @@ function showMenu(elem) {
 
 
 function deleteNote(noteId) {
-    let confirmDel = confirm("Are you sure you want to delete this note?");
+    let confirmDel = confirm("Delete this note?");
     if(!confirmDel) return;
     fetch(`/notes/${noteId}`, {
         method: "DELETE"
